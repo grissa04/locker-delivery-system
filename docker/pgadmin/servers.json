@@ -1,0 +1,15 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Locker Delivery DB",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "locker_delivery",
+      "Username": "postgres",
+      "Password": "postgres",
+      "SSLMode": "prefer",
+      "SavePassword": true
+    }
+  }
+}
