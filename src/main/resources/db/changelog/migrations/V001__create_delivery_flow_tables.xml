@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="V001-create-delivery-flow-tables" author="copilot">
+        <createTable tableName="lockers">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="locker_slots">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="locker_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="access_code" type="VARCHAR(50)"/>
+        </createTable>
+
+        <createTable tableName="parcels">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="slot_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="locker_slots"
+            baseColumnNames="locker_id"
+            referencedTableName="lockers"
+            referencedColumnNames="id"
+            constraintName="fk_locker_slots_locker"/>
+
+        <addForeignKeyConstraint
+            baseTableName="parcels"
+            baseColumnNames="slot_id"
+            referencedTableName="locker_slots"
+            referencedColumnNames="id"
+            constraintName="fk_parcels_slot"/>
+
+        <addUniqueConstraint
+            tableName="parcels"
+            columnNames="slot_id"
+            constraintName="uk_parcels_slot_id"/>
+    </changeSet>
+
+</databaseChangeLog>

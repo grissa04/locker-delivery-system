@@ -12,4 +12,7 @@
         <include file="db/changelog/migrations/V001__create_users_table.xml"/>
     -->
 
+    <include file="db/changelog/migrations/V001__create_delivery_flow_tables.xml"/>
+    <include file="db/changelog/migrations/V002__add_recipient_name_to_parcels.xml"/>
+
 </databaseChangeLog>
