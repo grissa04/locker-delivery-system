@@ -49,31 +49,26 @@ public class LockerSlot {
         return locker;
     }
 
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
-
     public SlotStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(SlotStatus status) {
-        this.status = status;
     }
 
     public String getAccessCode() {
         return accessCode;
     }
 
-    public void setAccessCode(String accessCode) {
-        this.accessCode = accessCode;
-    }
-
     public Parcel getParcel() {
         return parcel;
     }
 
-    public void setParcel(Parcel parcel) {
+    public void fillWithParcel(Parcel parcel) {
+        this.status = SlotStatus.OCCUPIED;
         this.parcel = parcel;
     }
+
+    public void fillWithParcel(Parcel parcel, String accessCode) {
+        this.accessCode = accessCode;
+        fillWithParcel(parcel);
+    }
+
 }

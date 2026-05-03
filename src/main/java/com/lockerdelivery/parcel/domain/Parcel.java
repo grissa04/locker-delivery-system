@@ -61,4 +61,14 @@ public class Parcel {
     public void setLockerSlot(LockerSlot lockerSlot) {
         this.lockerSlot = lockerSlot;
     }
+
+    public void assignSlot(LockerSlot lockerSlot) {
+        this.lockerSlot = lockerSlot;
+        this.status = ParcelStatus.IN_LOCKER;
+    }
+
+    public void assignSlot(LockerSlot lockerSlot, String recipientName) {
+        this.recipientName = recipientName;
+        assignSlot(lockerSlot);
+    }
 }

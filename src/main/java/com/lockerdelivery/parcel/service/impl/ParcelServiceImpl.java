@@ -41,12 +41,8 @@ public class ParcelServiceImpl implements ParcelService {
             .orElseThrow(() -> new IllegalStateException("No free slot available in locker: " + request.lockerId()));
 
         Parcel parcel = new Parcel();
-        parcel.setRecipientName(request.recipientName());
-        parcel.setStatus(ParcelStatus.IN_LOCKER);
-        parcel.setLockerSlot(freeSlot);
-
-        freeSlot.setStatus(SlotStatus.OCCUPIED);
-        freeSlot.setParcel(parcel);
+        parcel.assignSlot(freeSlot, request.recipientName());
+        freeSlot.fillWithParcel(parcel);
 
         Parcel savedParcel = parcelRepository.save(parcel);
         lockerSlotRepository.save(freeSlot);
