@@ -8,4 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface LockerSlotRepository extends JpaRepository<LockerSlot, Long> {
 
     Optional<LockerSlot> findFirstByLockerIdAndStatus(Long lockerId, SlotStatus status);
+
+    Optional<LockerSlot> findByAccessCode(String accessCode);
+
+    boolean existsByAccessCode(String accessCode);
 }

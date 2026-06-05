@@ -71,4 +71,10 @@ public class LockerSlot {
         fillWithParcel(parcel);
     }
 
+    public void release() {
+        this.status = SlotStatus.FREE;
+        this.accessCode = null;
+        this.parcel = null;
+    }
+
 }

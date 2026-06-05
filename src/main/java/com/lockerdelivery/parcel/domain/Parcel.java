@@ -71,4 +71,8 @@ public class Parcel {
         this.recipientName = recipientName;
         assignSlot(lockerSlot);
     }
+
+    public void markAsPicked() {
+        this.status = ParcelStatus.PICKED;
+    }
 }

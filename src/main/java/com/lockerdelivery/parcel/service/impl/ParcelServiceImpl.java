@@ -1,9 +1,10 @@
 package com.lockerdelivery.parcel.service.impl;
 
+import static com.lockerdelivery.delivery.utils.AccessCodeGenerator.generateAccessCode;
+
 import com.lockerdelivery.locker.domain.Locker;
 import com.lockerdelivery.locker.repository.LockerRepository;
 import com.lockerdelivery.parcel.domain.Parcel;
-import com.lockerdelivery.parcel.domain.ParcelStatus;
 import com.lockerdelivery.parcel.dto.CreateParcelRequest;
 import com.lockerdelivery.parcel.dto.ParcelResponse;
 import com.lockerdelivery.parcel.repository.ParcelRepository;
@@ -40,9 +41,11 @@ public class ParcelServiceImpl implements ParcelService {
         LockerSlot freeSlot = lockerSlotRepository.findFirstByLockerIdAndStatus(locker.getId(), SlotStatus.FREE)
             .orElseThrow(() -> new IllegalStateException("No free slot available in locker: " + request.lockerId()));
 
+        String accessCode = generateUniqueAccessCode();
+
         Parcel parcel = new Parcel();
         parcel.assignSlot(freeSlot, request.recipientName());
-        freeSlot.fillWithParcel(parcel);
+        freeSlot.fillWithParcel(parcel, accessCode);
 
         Parcel savedParcel = parcelRepository.save(parcel);
         lockerSlotRepository.save(freeSlot);
@@ -51,7 +54,18 @@ public class ParcelServiceImpl implements ParcelService {
             savedParcel.getId(),
             locker.getId(),
             freeSlot.getId(),
+            accessCode,
             savedParcel.getStatus()
         );
+    }
+
+    private String generateUniqueAccessCode() {
+        String accessCode = generateAccessCode();
+
+        while (lockerSlotRepository.existsByAccessCode(accessCode)) {
+            accessCode = generateAccessCode();
+        }
+
+        return accessCode;
     }
 }

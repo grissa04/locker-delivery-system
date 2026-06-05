@@ -6,6 +6,7 @@ public record ParcelResponse(
     Long parcelId,
     Long lockerId,
     Long slotId,
+    String accessCode,
     ParcelStatus status
 ) {
 }
